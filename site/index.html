@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI×Biology Papers — ICLR / ICML / NeurIPS 2010-2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>AI×Biology <span class="hero-accent">Corpus</span></h1>
+      <p class="hero-sub">Papers at the intersection of machine learning and biology from ICLR, ICML, and NeurIPS — <span id="hero-count">…</span> curated papers spanning <span id="hero-years">…</span></p>
+      <p class="hero-meta">Curated by <a href="https://biotender.online" target="_blank">BioTender</a> · Data updated <span id="hero-date">…</span></p>
+    </div>
+  </header>
+
+  <div class="dashboard-wrap">
+    <div class="dashboard" id="dashboard"></div>
+  </div>
+
+  <main class="container">
+    <aside class="filters" aria-label="Filters">
+      <div class="filter-group">
+        <label for="search">Search</label>
+        <input type="text" id="search" placeholder="title or abstract…" />
+      </div>
+
+      <div class="filter-group">
+        <label>Venue</label>
+        <div class="chip-row" id="venue-chips"></div>
+      </div>
+
+      <div class="filter-group">
+        <label>Year</label>
+        <div class="chip-row" id="year-chips"></div>
+      </div>
+
+      <div class="filter-group">
+        <label>Topic tags</label>
+        <div class="chip-row" id="tag-chips"></div>
+      </div>
+
+      <div class="filter-group">
+        <label for="sort">Sort by</label>
+        <select id="sort">
+          <option value="year-desc">Year (newest first)</option>
+          <option value="year-asc">Year (oldest first)</option>
+          <option value="title">Title (A→Z)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <button id="clear-filters" class="clear-btn">Clear filters</button>
+      </div>
+    </aside>
+
+    <section class="results" aria-label="Results">
+      <div class="results-meta">
+        <span id="result-count">…</span> papers
+        <span id="active-filters" class="active-filters"></span>
+      </div>
+      <div id="results" class="cards"></div>
+      <div id="pagination" class="pagination"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Static site by <a href="https://biotender.online" target="_blank">BioTender</a> · Source: OpenReview, PMLR, papers.nips.cc · <a href="methodology.html">Methodology</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

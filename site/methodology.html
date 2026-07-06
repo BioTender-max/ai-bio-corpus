@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology — AI×Biology Corpus</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero" style="padding-bottom: 1.5rem">
+    <div class="hero-inner">
+      <h1>Methodology</h1>
+      <p class="hero-sub">How this corpus was assembled — sources, filters, and validation.</p>
+      <p class="hero-meta"><a href="index.html">← Back to corpus</a> · <a href="https://biotender.online" target="_blank">BioTender</a></p>
+    </div>
+  </header>
+
+  <main class="container" style="grid-template-columns: 1fr; max-width: 900px">
+    <section class="results" style="width: 100%">
+      <div class="doc-body">
+        <h2>1. Data sources</h2>
+        <p>Three top-tier ML venues, three ingest paths:</p>
+        <ul>
+          <li><strong>ICML 2018-2023</strong> — <code>proceedings.mlr.press</code> (PMLR). Title-only scrape, followed by targeted abstract fetch for prefiltered candidates.</li>
+          <li><strong>ICML 2024-2026</strong> — OpenReview API, full metadata (title + abstract + keywords + primary area).</li>
+          <li><strong>NeurIPS 2010-2022</strong> — <code>papers.nips.cc</code>. Title-only scrape + abstract fetch.</li>
+          <li><strong>NeurIPS 2023-2025</strong> — OpenReview API.</li>
+          <li><strong>ICLR 2019-2026</strong> — OpenReview API (v1 endpoint for 2019-2023, v2 for 2024+).</li>
+        </ul>
+
+        <h2>2. Two-stage title-based pre-filter</h2>
+        <p>To make the fetch tractable for years where abstracts require per-paper HTTP calls (PMLR + NIPS), we use a compact keyword prefilter over titles: 44 biology-anchored terms (from cell-scale — <em>gene, CRISPR, single-cell</em> — through molecular structure, medical imaging, clinical, and neuroscience) yielding ~89% recall versus a longer 151-term list on the ICML 2026 ground truth. Shortlisted titles then get abstracts fetched individually.</p>
+
+        <h2>3. Filter pipeline</h2>
+        <p>A precision-tuned classifier acts on <code>title + abstract + keywords + primary_area</code>. It uses:</p>
+        <ul>
+          <li><strong>Grouped keyword hits</strong> (protein, molecule, clinical, neuro, genomics, md_structbio, single_cell, medical_imaging, oncology, immuno, etc.) — a paper needs signal in at least one strict-bio group to be kept.</li>
+          <li><strong>Title-strong bio overrides</strong> — unambiguous biology signals in the title (<em>CRISPR, alphafold, biomarker, retinopathy, carcinom, EHR, ...</em>) accept immediately.</li>
+          <li><strong>Area-level triage</strong> — papers whose <code>primary_area</code> is "applications → health/medicine" or "applications → chemistry/biology" require weaker corroboration; generic ML areas need stronger evidence.</li>
+          <li><strong>False-positive drops</strong> — pure-materials (crystal, MOF, catalyst screening, weather, PDE solvers, interatomic potentials without bio), <em>optimal brain surgeon</em>-style brain false positives, spiking-neural-network implementation papers.</li>
+        </ul>
+
+        <h2>4. Validation</h2>
+        <p>ICML 2026 has a manually curated ground truth of 315 papers. Against this reference:</p>
+        <ul>
+          <li><strong>Kept:</strong> 348</li>
+          <li><strong>Overlap with truth:</strong> 302 (<strong>95.9%</strong> recall)</li>
+          <li><strong>Missing:</strong> 13 (mostly chem/materials-adjacent — molecular design, interatomic potentials — where truth was more permissive than our chemistry filter)</li>
+          <li><strong>Extras:</strong> 46 legitimately AI×biology papers that the truth-set curator judged out-of-scope on editorial grounds, not filter false positives</li>
+        </ul>
+        <p>The remaining ~4% gap reflects unavoidable editorial subjectivity at the boundary; pushing further would overfit to one year's curation choices.</p>
+
+        <h2>5. Tag assignment</h2>
+        <p>Every kept paper is tagged with one to six topic labels from the same grouped-keyword system. Tags cover:</p>
+        <ul>
+          <li><strong>Biological scale:</strong> molecule, protein, single_cell, genomics, md_structbio</li>
+          <li><strong>Clinical/medical:</strong> clinical, medical_imaging, oncology, immuno, radiology</li>
+          <li><strong>Neuroscience:</strong> neuro, brain, EEG_fMRI, BCI</li>
+          <li><strong>Applications:</strong> drug_discovery, health_medicine, biomarker, diagnosis</li>
+        </ul>
+
+        <h2>6. Deduplication</h2>
+        <p>Papers are deduplicated by (venue, year, first 200 chars of lowercased title). This handles cases where a paper appears under multiple search terms in the OpenReview index.</p>
+
+        <h2>7. Caveats</h2>
+        <ul>
+          <li><strong>PMLR ICML 2018-2023 are floors.</strong> These went through the title-only prefilter step; a title without an obvious bio keyword (e.g. <em>"Learning to sample protein-drug interactions"</em>) may have been missed. Recall is ~89% on this path.</li>
+          <li><strong>Editorial threshold varies.</strong> Papers using bio-inspired mechanisms (predictive coding, brain-inspired memory) or medical AI methodology are included by the filter but a stricter curator might exclude them.</li>
+          <li><strong>OpenReview only ships accepted papers.</strong> Withdrawn / rejected submissions are not in scope.</li>
+        </ul>
+
+        <h2>8. Reproducibility</h2>
+        <p>Complete source code, filter logic, and pipeline scripts are packaged. The corpus rebuilds deterministically from the raw OpenReview / PMLR / NIPS fetches; the filter is a locked v3 snapshot at <code>filter_pipeline_v3_locked.py</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Static site by <a href="https://biotender.online" target="_blank">BioTender</a> · <a href="index.html">Back to corpus</a></p>
+  </footer>
+
+  <style>
+    .doc-body h2 {
+      margin: 2rem 0 0.75rem;
+      font-size: 1.4rem;
+      border-bottom: 3px solid var(--black);
+      padding-bottom: 0.35rem;
+    }
+    .doc-body h2:first-child { margin-top: 0; }
+    .doc-body p { margin-bottom: 0.75rem; }
+    .doc-body ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .doc-body li { margin-bottom: 0.35rem; }
+    .doc-body code {
+      background: var(--warm-gray);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+  </style>
+</body>
+</html>

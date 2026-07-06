@@ -1,0 +1,58 @@
+Creative Commons Attribution 4.0 International License (CC BY 4.0)
+
+Copyright (c) 2026 Junior Yu (BioTender)
+
+This is a human-readable summary of (and not a substitute for) the license.
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to:
+  * Share  — copy and redistribute the material in any medium or format
+  * Adapt  — remix, transform, and build upon the material for any purpose,
+             even commercially.
+
+Under the following terms:
+  * Attribution — You must give appropriate credit, provide a link to the
+    license, and indicate if changes were made. You may do so in any
+    reasonable manner, but not in any way that suggests the licensor endorses
+    you or your use.
+
+No additional restrictions — You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license
+permits.
+
+--------------------------------------------------------------------------------
+
+Scope of CC-BY-4.0 in this repository:
+  This license covers the CURATION and PACKAGING work performed by BioTender:
+
+    - The selection of the 3,722 papers (a curatorial editorial decision)
+    - The topic tag annotations attached to each paper
+    - The venue/year metadata schema and derived aggregate statistics
+    - Written content: article/article_cn.md, docs/METHODOLOGY.md, README.md
+    - Original figures in figures/  (corpus_overview.*, topic_trajectories.*)
+
+--------------------------------------------------------------------------------
+
+IMPORTANT — third-party content notice:
+
+The paper metadata (title, abstract, authors, PDF URL, paper page URL)
+included in corpus/papers_master.json, corpus/papers_master.csv,
+site/data/papers.json, and biotender-ai-bio-corpus.html was retrieved from
+OpenReview, PMLR (proceedings.mlr.press), and papers.nips.cc.
+
+  * Paper titles, abstracts, and authorship belong to the original paper
+    authors and their publishers.
+  * BioTender does NOT own or claim copyright over the paper metadata itself.
+  * Downstream users of this repository who redistribute or republish
+    individual paper titles/abstracts/authors must comply with the terms of
+    the original source (OpenReview policies, ICLR/ICML/NeurIPS publication
+    agreements, and applicable author copyright).
+  * Fields marked in docs/METHODOLOGY.md as VERIFIED (crawled) come from
+    those upstream sources. Fields marked DERIVED (tag inference, aggregate
+    stats) and SUBJECTIVE (curatorial inclusion decisions) are BioTender's
+    editorial contribution and fall under CC-BY-4.0 above.
+
+If you use this dataset for research, please cite:
+
+  BioTender. "AI×Biology Corpus at ICLR / ICML / NeurIPS 2010–2026."
+  https://github.com/<user>/biotender-ai-bio-corpus  (Retrieved YYYY-MM-DD)
