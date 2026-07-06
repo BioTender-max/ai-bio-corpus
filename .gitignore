@@ -1,0 +1,48 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --- Environment ---
+.env
+.env.local
+
+# --- Scratch / intermediates ---
+# The corpus/, site/, and biotender-ai-bio-corpus.html files ARE tracked.
+# But if you re-run the pipeline, intermediates live outside the repo — do
+# not commit them:
+tmp/
+scratch/
+*.log
+fetch_state*.json
+openreview_*.json
+titles_*.json
+shortlist_*.json
+abstracts_*.json
+
+# --- OS-specific cache from browsers when previewing site/ ---
+.playwright/
